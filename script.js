@@ -1,3 +1,25 @@
+// *************Başlamadan for...in ve for...of kullanımı****************
+
+// var dizi = ["Kayısı","Kiraz", "Muz"];
+
+// for (var i in dizi) {
+
+//   console.log(i);
+// }
+// 0
+// 1
+// 2
+
+// for (var i of dizi) {
+
+//   console.log(i);
+// }
+// Kayısı
+// Kiraz
+// Muz
+
+//NOT : for...in tanımladığımız değişkene ( var i ) key değerlerini döndürür.  for...of  value değerlerini döndürür. fakat objectler ile kullanılamıyor.
+
 function Soru(soruMetni, cevapSecenekleri, dogruCevap) {
     this.soruMetni = soruMetni;
     this.cevapSecenekleri = cevapSecenekleri;
@@ -45,13 +67,15 @@ const quiz = new Quiz(sorular);
 
 document.querySelector(".btn-start").addEventListener("click", function (e) {
     document.querySelector(".quiz_box").classList.add("active");
-    soruGoster(quiz.soruGetir());   
+    soruGoster(quiz.soruGetir());
+    soruSayisi(quiz.soruIndex + 1,quiz.sorular.length);
 });
 
 document.querySelector(".next_btn").addEventListener("click", function () {
     if (quiz.sorular.length != quiz.soruIndex +1) {
         quiz.soruIndex += 1;
         soruGoster(quiz.soruGetir());   
+        soruSayisi(quiz.soruIndex + 1,quiz.sorular.length);
         document.querySelector(".next_btn").classList.remove("show");
     } else {
         console.log("Soruları tamamladınız.");
@@ -103,4 +127,9 @@ function optionSelected(option){
         option_list.children[i].classList.add("disabled");
     }
     document.querySelector(".next_btn").classList.add("show");
+}
+
+function soruSayisi(soruSirasi,toplamSoru){
+    let tag = `<span class="badge bg-warning">${soruSirasi}/${toplamSoru}</span>`;
+    document.querySelector(".quiz_box .number_questions").innerHTML = tag;
 }
