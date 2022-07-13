@@ -29,6 +29,7 @@ ui.btn_start.addEventListener("click", function (e) {
     ui.soruGoster(quiz.soruGetir());
     ui.soruSayisi(quiz.soruIndex + 1,quiz.sorular.length);
     ui.btn_next.classList.remove("show");
+    startTimer(10);
 });
 
 ui.btn_next.addEventListener("click", function () {
@@ -39,12 +40,26 @@ ui.btn_next.addEventListener("click", function () {
         ui.btn_next.classList.remove("show");
     } else {
         console.log("Soruları tamamladınız.");
+        ui.quiz_box.classList.remove("active");
+        ui.score_box.classList.add("active");
+        ui.skoruGoster(quiz.sorular.length , quiz.dogruCevap);
     }
 });
 //Moved to ui.js
 // const option_list = document.querySelector(".option_list");
 // const correctIcon = '<div class="icon"><i class="fas fa-check"></i></div>';
 // const incorrectIcon = '<div class="icon"><i class="fas fa-times"></i></div>';
+
+ui.btn_quit.addEventListener("click", function(){
+    window.location.reload();
+});
+ui.btn_replay.addEventListener("click", function(){
+    quiz.soruIndex = 0;
+    quiz.dogruCevap = 0;
+    ui.btn_start.click();
+    ui.score_box.classList.remove("active");
+});
+
 
 
 function optionSelected(option){
@@ -57,6 +72,7 @@ function optionSelected(option){
         option.classList.add("correct");
         option.insertAdjacentHTML("beforeend", ui.correctIcon);
         //Option div'inin içine "beforeend" yani bitişten önce son eleman olarak correctIcon değişkenini ekledik. Değişkenide 62.satırda tanımladık.
+        quiz.dogruCevap += 1;
     }else{
         option.classList.add("incorrect");
         option.insertAdjacentHTML("beforeend", ui.incorrectIcon);
@@ -65,5 +81,13 @@ function optionSelected(option){
         ui.option_list.children[i].classList.add("disabled");
     }
     ui.btn_next.classList.add("show");
+}
+
+function startTimer(time){
+    setInterval(timer, 1000);
+
+    function timer(){
+        console.log("aa");
+    }
 }
 

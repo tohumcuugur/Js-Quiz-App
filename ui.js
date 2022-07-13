@@ -1,7 +1,10 @@
 function UI(){
     this.btn_start = document.querySelector(".btn-start"),
     this.btn_next = document.querySelector(".next_btn"),
+    this.btn_replay = document.querySelector(".btn_replay"),
+    this.btn_quit = document.querySelector(".btn_quit"),
     this.quiz_box = document.querySelector(".quiz_box"),
+    this.score_box = document.querySelector(".score_box"),
     this.option_list = document.querySelector(".option_list"),
     this.correctIcon = '<div class="icon"><i class="fas fa-check"></i></div>',
     this.incorrectIcon = '<div class="icon"><i class="fas fa-times"></i></div>'
@@ -32,4 +35,9 @@ UI.prototype.soruGoster = function(soru) {
 UI.prototype.soruSayisi = function(soruSirasi,toplamSoru){
     let tag = `<span class="badge bg-warning">${soruSirasi}/${toplamSoru}</span>`;
     document.querySelector(".quiz_box .number_questions").innerHTML = tag;
+}
+
+UI.prototype.skoruGoster = function(toplamSoru,dogruCevap){
+    let tag = `Toplam ${toplamSoru} sorudan ${dogruCevap} doğru cevap verdiniz.`
+    document.querySelector(".score_box .score_text").innerHTML = tag;
 }
