@@ -41,6 +41,6 @@ UI.prototype.soruSayisi = function(soruSirasi,toplamSoru){
 }
 
 UI.prototype.skoruGoster = function(toplamSoru,dogruCevap){
-    let tag = `Toplam ${toplamSoru} sorudan ${dogruCevap} doğru cevap verdiniz.`
+    let tag = `You have given ${dogruCevap} correct answers out of a total of ${toplamSoru}questions.`
     document.querySelector(".score_box .score_text").innerHTML = tag;
 }
