@@ -83,13 +83,6 @@ function optionSelected(option){
     }else{
         option.classList.add("incorrect");
         option.insertAdjacentHTML("beforeend", ui.incorrectIcon);
-        for (let option of ui.option_list.children){
-            if(option.querySelector("span b").textContent ==cevap){
-                option.classList.add("correct");
-                option.insertAdjacentHTML("beforeend",ui.correctIcon);
-            }
-            option.classList.add("disabled");//eğer şık işaretlenmezse süre dolduğunda otomatik şıkkı işaretler ve kullanıncının işaretlemesini önler.
-        }
     }
     for(let i=0; i < ui.option_list.children.length; i++){
         ui.option_list.children[i].classList.add("disabled");
