@@ -30,16 +30,23 @@ ui.btn_start.addEventListener("click", function (e) {
     ui.soruSayisi(quiz.soruIndex + 1,quiz.sorular.length);
     ui.btn_next.classList.remove("show");
     startTimer(10);
+    startTimerLine();
 });
 
 ui.btn_next.addEventListener("click", function () {
     if (quiz.sorular.length != quiz.soruIndex +1) {
         quiz.soruIndex += 1;
+        clearInterval(counter);
+        clearInterval(counter_line);
+        startTimerLine();
+        startTimer(10);
         ui.soruGoster(quiz.soruGetir());   
         ui.soruSayisi(quiz.soruIndex + 1,quiz.sorular.length);
         ui.btn_next.classList.remove("show");
     } else {
-        console.log("Soruları tamamladınız.");
+        // console.log("Soruları tamamladınız.");
+        clearInterval(counter);
+        clearInterval(counter_line);
         ui.quiz_box.classList.remove("active");
         ui.score_box.classList.add("active");
         ui.skoruGoster(quiz.sorular.length , quiz.dogruCevap);
@@ -60,34 +67,73 @@ ui.btn_replay.addEventListener("click", function(){
     ui.score_box.classList.remove("active");
 });
 
-
-
 function optionSelected(option){
-    // console.log(option);
+    clearInterval(counter);
+    clearInterval(counter_line);
     let cevap = option.querySelector("span b").textContent;
     // console.log(cevap); 
     let soru = quiz.soruGetir();
     // console.log(soru);
+
     if(soru.cevapKontrol(cevap)){
+        quiz.dogruCevap += 1;
         option.classList.add("correct");
         option.insertAdjacentHTML("beforeend", ui.correctIcon);
         //Option div'inin içine "beforeend" yani bitişten önce son eleman olarak correctIcon değişkenini ekledik. Değişkenide 62.satırda tanımladık.
-        quiz.dogruCevap += 1;
     }else{
         option.classList.add("incorrect");
         option.insertAdjacentHTML("beforeend", ui.incorrectIcon);
+        for (let option of ui.option_list.children){
+            if(option.querySelector("span b").textContent ==cevap){
+                option.classList.add("correct");
+                option.insertAdjacentHTML("beforeend",ui.correctIcon);
+            }
+            option.classList.add("disabled");//eğer şık işaretlenmezse süre dolduğunda otomatik şıkkı işaretler ve kullanıncının işaretlemesini önler.
+        }
     }
     for(let i=0; i < ui.option_list.children.length; i++){
         ui.option_list.children[i].classList.add("disabled");
     }
     ui.btn_next.classList.add("show");
 }
-
+let counter;
 function startTimer(time){
-    setInterval(timer, 1000);
+    counter = setInterval(timer, 1000);
 
     function timer(){
-        console.log("aa");
+        ui.time_second.textContent = time;
+        time--;
+        if(time < 0 ){
+            clearInterval(counter);
+            
+            ui.time_text.textContent = "Süreniz Bitti...";
+
+            let cevap = quiz.soruGetir().dogruCevap;
+
+            for (let option of ui.option_list.children){
+                if(option.querySelector("span b").textContent ==cevap){
+                    option.classList.add("correct");
+                    option.insertAdjacentHTML("beforeend",ui.correctIcon);
+                }
+                option.classList.add("disabled");//eğer şık işaretlenmezse süre dolduğunda otomatik şıkkı işaretler ve kullanıncının işaretlemesini önler.
+            }
+            ui.btn_next.classList.add("show");
+        }
     }
+}
+
+let counter_line;
+function startTimerLine(){
+    let line_width = 0;
+
+    counter_line = setInterval(timer,20);
+    
+    function timer(){
+        line_width +=1;
+        ui.time_line.style.width = line_width + "px";
+        if(line_width > 549){
+            clearInterval(counter_line);
+    }
+}
 }
 

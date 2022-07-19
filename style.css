@@ -81,6 +81,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 .quiz_box header .timer {
     display: flex;
@@ -102,6 +103,15 @@
     margin-left: 5px;
     width: 35px;
     text-align: center;
+}
+/* TİMER */
+.quiz_box header .time_line{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    /* width: 550px; 0-500 olması gerek js aracılığı ile yapacağız*/
+    background-color: #F0A500;
 }
 
 /* SCORE BOX */
